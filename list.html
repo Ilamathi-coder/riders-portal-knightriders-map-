@@ -1,0 +1,72 @@
+{% extends 'main/base.html' %}
+{% block title %}List{% endblock %}
+{% block content %}
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&display=swap');
+
+    body {
+        background-color: #0b0c2a;
+        color: #f3f3f0;
+        font-family: 'IM Fell English SC', serif;
+        overflow-x: hidden;
+    }
+
+    .list-container {
+        margin: 60px auto;
+        max-width: 800px;
+        padding: 30px;
+        background-color: rgba(20, 20, 40, 0.8);
+        border: 1px solid #ffc107;
+        border-radius: 20px;
+        box-shadow: 0 0 20px #ffd700;
+        text-align: center;
+    }
+
+    .wand-sparkle {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: radial-gradient(circle, #ffd700 0%, rgba(255, 215, 0, 0.1) 70%);
+        border-radius: 50%;
+        animation: sparkle 2s infinite ease-in-out;
+    }
+
+    @keyframes sparkle {
+        0% {
+            transform: scale(0.8);
+            opacity: 1;
+        }
+        50% {
+            transform: scale(1.4);
+            opacity: 0.6;
+        }
+        100% {
+            transform: scale(0.8);
+            opacity: 1;
+        }
+    }
+</style>
+
+<div class="list-container">
+    <h2 class="mb-4">Your Magical List</h2>
+    <div>
+        {{ content|safe }}
+    </div>
+</div>
+
+<script>
+    const sparkles = 60;
+    for (let i = 0; i < sparkles; i++) {
+        let sparkle = document.createElement('div');
+        sparkle.classList.add('wand-sparkle');
+        sparkle.style.top = Math.random() * 100 + '%';
+        sparkle.style.left = Math.random() * 100 + '%';
+        sparkle.style.width = Math.random() * 8 + 5 + 'px';
+        sparkle.style.height = sparkle.style.width;
+        sparkle.style.animationDelay = Math.random() * 2 + 's';
+        document.body.appendChild(sparkle);
+    }
+</script>
+
+{% endblock %}

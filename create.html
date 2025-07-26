@@ -1,0 +1,85 @@
+{% extends 'main/base.html' %}
+{% block title %}Create{% endblock %}
+{% block content %}
+
+<!-- Magical Font -->
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        background-color: #0d0221;
+        color: #f3f3f3;
+        font-family: 'Cinzel Decorative', cursive;
+        overflow: hidden;
+    }
+
+    .sparkle {
+        position: absolute;
+        border-radius: 50%;
+        pointer-events: none;
+        animation: sparkleAnim 1s ease-out forwards;
+    }
+
+    @keyframes sparkleAnim {
+        0% {
+            transform: scale(1);
+            opacity: 1;
+        }
+        100% {
+            transform: scale(2);
+            opacity: 0;
+        }
+    }
+
+    .center-box {
+        background-color: rgba(255, 255, 255, 0.05);
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 0 25px gold;
+        margin-top: 60px;
+    }
+
+    h2 {
+        text-align: center;
+        font-size: 2.2rem;
+        margin-bottom: 30px;
+        color: gold;
+    }
+</style>
+
+<div class="row justify-content-center">
+    <div class="col-md-6 center-box">
+        <h2>Create</h2>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-warning">
+                <i class="fa fa-plus-circle"></i> Create
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('mousemove', function(e) {
+        const sparkle = document.createElement('div');
+        sparkle.classList.add('sparkle');
+
+        const size = Math.random() * 6 + 4;
+        sparkle.style.width = `${size}px`;
+        sparkle.style.height = `${size}px`;
+        sparkle.style.background = `radial-gradient(circle, gold, transparent)`;
+        sparkle.style.left = `${e.pageX}px`;
+        sparkle.style.top = `${e.pageY}px`;
+
+        document.body.appendChild(sparkle);
+
+        setTimeout(() => {
+            sparkle.remove();
+        }, 1000);
+    });
+</script>
+
+{% endblock %}
+
+

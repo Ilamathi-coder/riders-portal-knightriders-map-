@@ -1,0 +1,72 @@
+{% extends 'main/base.html' %}
+{% block title %}Search{% endblock %}
+{% block content %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&display=swap');
+
+    body {
+        background-color: #0d0d0d;
+        color: #f3f3f3;
+        font-family: 'IM Fell English SC', serif;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .wand-sparkle {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: radial-gradient(circle, gold, #ffcc00, transparent);
+        pointer-events: none;
+        opacity: 0.9;
+        animation: sparkle-animation 1s ease-out forwards;
+    }
+
+    @keyframes sparkle-animation {
+        0% {
+            transform: scale(1.5);
+            opacity: 1;
+        }
+        100% {
+            transform: scale(0);
+            opacity: 0;
+        }
+    }
+
+    .content-box {
+        background-color: rgba(25, 25, 25, 0.8);
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 0 25px #ffcc00;
+        max-width: 500px;
+        margin: 50px auto;
+        text-align: center;
+    }
+
+    h2 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+    }
+</style>
+
+<script>
+    document.addEventListener('mousemove', function(e) {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'wand-sparkle';
+        sparkle.style.left = e.pageX + 'px';
+        sparkle.style.top = e.pageY + 'px';
+        document.body.appendChild(sparkle);
+        setTimeout(() => sparkle.remove(), 1000);
+    });
+</script>
+
+<div class="content-box">
+    <h2 class="mb-4">Search</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
+    </form>
+</div>
+{% endblock %}

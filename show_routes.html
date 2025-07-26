@@ -1,0 +1,73 @@
+{% extends 'main/base.html' %}
+{% block title %}Show Routes{% endblock %}
+{% block content %}
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Almendra+SC&display=swap');
+
+    body {
+        background-color: #0b0217;
+        color: #f8f0c6;
+        font-family: 'Almendra SC', serif;
+        overflow: hidden;
+    }
+
+    .magic-box {
+        background: rgba(0, 0, 0, 0.6);
+        border: 2px solid #ffd700;
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 0 20px #ffd700;
+        text-align: center;
+        max-width: 700px;
+        margin: 100px auto;
+    }
+
+    .sparkle {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        background: radial-gradient(circle, #ffd700 0%, transparent 70%);
+        border-radius: 50%;
+        animation: sparkle 2s infinite ease-in-out;
+        opacity: 0.8;
+    }
+
+    @keyframes sparkle {
+        0% {
+            transform: scale(1);
+            opacity: 1;
+        }
+        50% {
+            transform: scale(2);
+            opacity: 0.4;
+        }
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+</style>
+
+<div class="magic-box">
+    <h2>Show Routes</h2>
+    <!-- Your existing show routes content here -->
+</div>
+
+<script>
+    function createSparkles(num) {
+        for (let i = 0; i < num; i++) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.top = Math.random() * window.innerHeight + 'px';
+            sparkle.style.left = Math.random() * window.innerWidth + 'px';
+            sparkle.style.width = (Math.random() * 4 + 4) + 'px';
+            sparkle.style.height = sparkle.style.width;
+            sparkle.style.animationDuration = (Math.random() * 2 + 1) + 's';
+            document.body.appendChild(sparkle);
+        }
+    }
+    createSparkles(100);
+</script>
+
+{% endblock %}

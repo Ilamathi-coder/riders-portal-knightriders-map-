@@ -1,0 +1,120 @@
+{% extends "main/base.html" %}
+{% block content %}
+<html>
+  <head>
+    <title>Offline Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
+    <style>
+      body {
+        background-color: #0c001f;
+        color: #ffd700;
+        font-family: 'MedievalSharp', cursive;
+        overflow-x: hidden;
+      }
+      .inputs {
+        padding: 20px;
+        text-align: center;
+      }
+      #src, #dest {
+        padding: 8px;
+        margin: 5px;
+        border-radius: 8px;
+        border: none;
+        font-size: 16px;
+        background-color: #1e0038;
+        color: #ffd700;
+      }
+      button {
+        padding: 10px 20px;
+        background-color: #470097;
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        box-shadow: 0 0 10px #ffd700;
+      }
+      button:hover {
+        background-color: #35006b;
+        box-shadow: 0 0 15px #ffd700;
+      }
+      #map {
+        height: 800px;
+        width: 100%;
+        margin-top: 10px;
+        border: 3px solid #ffd700;
+        border-radius: 20px;
+      }
+
+      /* Sparkles */
+      .sparkle {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        background: radial-gradient(circle, #fffa8b, #ffd700);
+        border-radius: 50%;
+        pointer-events: none;
+        opacity: 0.8;
+        animation: sparkleAnim 1s linear infinite;
+      }
+      @keyframes sparkleAnim {
+        0% { transform: scale(0.5); opacity: 1; }
+        50% { transform: scale(1.2); opacity: 0.6; }
+        100% { transform: scale(0.5); opacity: 0; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="inputs">
+      <input type="text" id="src" placeholder="Source (lat,lng)" />
+      <input type="text" id="dest" placeholder="Destination (lat,lng)" />
+      <button onclick="plotRoute()">🪄 Plot Route</button>
+    </div>
+    <div id="map"></div>
+
+    <!-- Leaflet Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+
+    <script>
+      const map = L.map('map').setView([21.1458, 79.0882], 13);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap contributors'
+      }).addTo(map);
+
+      let control = null;
+      function plotRoute() {
+        const src = document.getElementById("src").value.split(",");
+        const dest = document.getElementById("dest").value.split(",");
+        if (control !== null) {
+          map.removeControl(control);
+        }
+        control = L.Routing.control({
+          waypoints: [
+            L.latLng(parseFloat(src[0]), parseFloat(src[1])),
+            L.latLng(parseFloat(dest[0]), parseFloat(dest[1]))
+          ],
+          routeWhileDragging: true
+        }).addTo(map);
+      }
+
+      // Sparkle Animation
+      document.addEventListener("mousemove", (e) => {
+        for (let i = 0; i < 3; i++) {
+          const sparkle = document.createElement("div");
+          sparkle.className = "sparkle";
+          sparkle.style.left = `${e.pageX + Math.random() * 20 - 10}px`;
+          sparkle.style.top = `${e.pageY + Math.random() * 20 - 10}px`;
+          sparkle.style.width = `${4 + Math.random() * 6}px`;
+          sparkle.style.height = sparkle.style.width;
+          document.body.appendChild(sparkle);
+          setTimeout(() => sparkle.remove(), 1000);
+        }
+      });
+    </script>
+  </body>
+</html>
+{% endblock %}

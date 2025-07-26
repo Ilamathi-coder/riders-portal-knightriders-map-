@@ -1,0 +1,79 @@
+{% extends 'main/base.html' %}
+{% block title %}About{% endblock %}
+{% block content %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&display=swap');
+
+    body {
+        background-color: #1a001a;
+        color: #ffd700;
+        font-family: 'IM Fell English SC', serif;
+        overflow: hidden;
+    }
+
+    h2 {
+        font-size: 2.5rem;
+        text-align: center;
+        margin-top: 40px;
+        margin-bottom: 20px;
+    }
+
+    .about-box {
+        background-color: rgba(0, 0, 0, 0.7);
+        border: 2px solid #ffd700;
+        border-radius: 20px;
+        padding: 30px;
+        max-width: 700px;
+        margin: 0 auto;
+        text-align: center;
+        box-shadow: 0 0 25px #ffd700;
+    }
+
+    /* Wand sparkles */
+    .sparkle {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background-color: gold;
+        border-radius: 50%;
+        box-shadow: 0 0 20px gold, 0 0 40px gold;
+        animation: sparkleAnim 1.5s infinite ease-in-out;
+        opacity: 0.8;
+    }
+
+    @keyframes sparkleAnim {
+        0% {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+        50% {
+            transform: scale(1.5) translateY(-10px);
+            opacity: 0.6;
+        }
+        100% {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+    }
+</style>
+
+<div class="about-box">
+    <h2>About Rider’s Portal</h2>
+    <p>Welcome to Rider’s Portal – your magical riding companion enchanted with AI spells and wizardry tech! Navigate through enchanted maps, avoid cursed wrong paths, and stay connected even in the Forbidden Zones with mesh-powered offline routing. Designed by the finest wizards in Ravenclaw, this portal is your key to magical mobility!</p>
+</div>
+
+<script>
+    // Sparkles generator
+    const numSparkles = 50;
+    for (let i = 0; i < numSparkles; i++) {
+        const sparkle = document.createElement("div");
+        sparkle.className = "sparkle";
+        sparkle.style.left = Math.random() * 100 + "vw";
+        sparkle.style.top = Math.random() * 100 + "vh";
+        sparkle.style.width = Math.random() * 5 + 5 + "px";
+        sparkle.style.height = sparkle.style.width;
+        sparkle.style.animationDuration = (1 + Math.random()) + "s";
+        document.body.appendChild(sparkle);
+    }
+</script>
+{% endblock %}

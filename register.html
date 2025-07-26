@@ -1,0 +1,58 @@
+{% extends 'main/base.html' %}
+{% block title %}Register{% endblock %}
+{% block content %}
+<style>
+    body {
+        background-color: #9910fc; /* Dark magical background */
+        color: #f3f3f0; /* Optional: bright text for readability */
+    }
+    .sparkle {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: #ffffff;
+        border-radius: 50%;
+        animation: sparkle-animation 4s linear infinite;
+        opacity: 0.8;
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    @keyframes sparkle-animation {
+        0% {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(-600px) scale(0.3);
+            opacity: 0;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const sparkleCount = 60;
+        for (let i = 0; i < sparkleCount; i++) {
+            const sparkle = document.createElement("div");
+            sparkle.classList.add("sparkle");
+            sparkle.style.left = Math.random() * 100 + "vw";
+            sparkle.style.top = Math.random() * 100 + "vh";
+            sparkle.style.animationDuration = (Math.random() * 3 + 2) + "s";
+            sparkle.style.animationDelay = Math.random() * 5 + "s";
+            document.body.appendChild(sparkle);
+        }
+    });
+</script>
+</style>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <h2 class="mb-4">Register</h2>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary"><i class="fa fa-user-plus"></i> Register</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'main/base.html' %}
+{% block title %}Weather Information{% endblock %}
+{% block content %}
+<style>
+    body {
+        background-color: #17072b; /* Deep magical night */
+        color: #fff8dc; /* Soft golden white text */
+        font-family: 'Cinzel Decorative', cursive;
+    }
+
+    .wand-sparkle {
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        background: radial-gradient(circle, #ffd700 0%, #fff 80%);
+        border-radius: 50%;
+        animation: sparkleAnim 2s ease-out infinite;
+        pointer-events: none;
+        opacity: 0.9;
+    }
+
+    @keyframes sparkleAnim {
+        0% {
+            transform: scale(0.8) translateY(0);
+            opacity: 1;
+        }
+        100% {
+            transform: scale(1.5) translateY(-40px);
+            opacity: 0;
+        }
+    }
+
+    .center-box {
+        margin: 50px auto;
+        background-color: rgba(0, 0, 0, 0.6);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px #ffd700;
+        width: 80%;
+        text-align: center;
+    }
+</style>
+<div class="center-box">
+<h2 style="font-size: 30px;">Check Weather</h2>
+<form method="POST" class="mb-4">
+    {% csrf_token %}
+    <div class="input-group">
+        <input type="text" name="place" class="form-control" placeholder="Enter location">
+        <button type="submit" class="btn btn-primary"><i class="fa fa-cloud-sun"></i> Get Weather</button>
+    </div>
+</form>
+
+{% if weather %}
+    <div class="alert alert-info mt-4">
+        <h4>Weather in {{ place }}</h4>
+        <p>Temperature: {{ weather.0.0 }}°C</p>
+        <p>Condition: {{ weather.0.1 }}</p>
+    </div>
+{% endif %}
+</div>
+<script>
+    document.addEventListener("mousemove", function(e) {
+        const sparkle = document.createElement("div");
+        sparkle.className = "wand-sparkle";
+        sparkle.style.left = `${e.pageX}px`;
+        sparkle.style.top = `${e.pageY}px`;
+        document.body.appendChild(sparkle);
+        setTimeout(() => sparkle.remove(), 2000);
+    });
+</script>
+{% endblock %}

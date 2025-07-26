@@ -1,0 +1,9 @@
+{% extends 'main/base.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<div class="text-center">
+    <h1>Welcome, {{ user.username }}!</h1>
+    <p class="lead">Manage your tasks efficiently.</p>
+    <a href="{% url 'create' %}" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Create New List</a>
+</div>
+{% endblock %}

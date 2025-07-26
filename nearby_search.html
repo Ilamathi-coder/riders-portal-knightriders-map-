@@ -1,0 +1,78 @@
+{% extends 'main/base.html' %}
+{% block title %}Nearby Search{% endblock %}
+{% block content %}
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        background-color: #0b0c2a;
+        color: #f9f6e5;
+        font-family: 'IM Fell English SC', serif;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .wand-sparkle {
+        position: fixed;
+        pointer-events: none;
+        z-index: 9999;
+        animation: fadeOut 1s forwards;
+        border-radius: 50%;
+    }
+
+    @keyframes fadeOut {
+        to {
+            opacity: 0;
+            transform: scale(2);
+        }
+    }
+
+    .search-container {
+        max-width: 600px;
+        margin: 80px auto;
+        padding: 30px;
+        border-radius: 15px;
+        background: rgba(255, 215, 0, 0.1);
+        border: 2px solid gold;
+        box-shadow: 0 0 20px gold;
+    }
+
+    h2 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    label {
+        font-size: 1.1rem;
+    }
+
+    button {
+        margin-top: 10px;
+    }
+</style>
+
+<script>
+    document.addEventListener("mousemove", function(e) {
+        const sparkle = document.createElement("div");
+        const size = Math.random() * 8 + 4;
+        sparkle.classList.add("wand-sparkle");
+        sparkle.style.width = size + "px";
+        sparkle.style.height = size + "px";
+        sparkle.style.background = "radial-gradient(circle, #ffd700, #fff)";
+        sparkle.style.left = e.pageX + "px";
+        sparkle.style.top = e.pageY + "px";
+        document.body.appendChild(sparkle);
+        setTimeout(() => sparkle.remove(), 1000);
+    });
+</script>
+
+<div class="search-container">
+    <h2>Nearby Search</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
+    </form>
+</div>
+{% endblock %}
